@@ -1,0 +1,10 @@
+[package]
+name = "book-store-app"
+version = "0.1.0"
+edition = "2021"
+readme = "readme.md"
+license = "Apache-2.0"
+description = "book store using rust, graphql and postgres"
+repository = "https://github.com/ironbit/showcase/book-store-rs"
+keywords = ["rust", "graphql", "postgres"]
+categories = ["showcase"]

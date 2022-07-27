@@ -1,0 +1,38 @@
+name: CI Book Store Rust
+
+on:
+    pull_request:
+    push:
+        branches:
+            - main
+
+permissions:
+    contents: read
+    pull-requests: read
+
+jobs:
+    book-store-rs:
+        runs-on: ubuntu-latest
+
+        container:
+            image: rust:alpine
+
+        steps:
+            - name: checkout repository
+              uses: actions/checkout@v3
+
+            - name: verify format
+              run: |
+                rustup component add rustfmt
+                cargo fmt --all -- --check
+
+            - name: execute lints
+              run: |
+                rustup component add clippy
+                cargo clippy --all-targets --all-features -- -D clippy::all -D clippy::pedantic -D clippy::cargo
+
+            - name: compile release
+              run: cargo build --release --all-targets --all-features
+
+            - name: test release
+              run: cargo test --jobs 1 --release --all-targets --all-features
