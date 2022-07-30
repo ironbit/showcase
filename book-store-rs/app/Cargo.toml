@@ -8,3 +8,7 @@ description = "book store using rust, graphql and postgres"
 repository = "https://github.com/ironbit/showcase/book-store-rs"
 keywords = ["rust", "graphql", "postgres"]
 categories = ["showcase"]
+
+[dependencies]
+book-store-lib = { path = "../lib" }
+tokio = { version = "1.20.0", features = ["rt", "macros"] }
