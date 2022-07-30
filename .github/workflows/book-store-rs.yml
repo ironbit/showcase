@@ -15,7 +15,7 @@ jobs:
         runs-on: ubuntu-latest
 
         container:
-            image: rust:alpine
+            image: rust:slim
 
         env:
             WORK_DIR: ./book-store-rs

@@ -8,3 +8,12 @@ description = "book store using rust, graphql and postgres"
 repository = "https://github.com/ironbit/showcase/book-store-rs"
 keywords = ["rust", "graphql", "postgres"]
 categories = ["showcase"]
+
+[dependencies]
+anyhow = "1.0.58"
+uuid = { version = "1.1.2", features = ["v4", "fast-rng", "macro-diagnostics"] }
+axum = "0.5.13"
+hyper = "0.14.20"
+async-graphql-axum = "4.0.5"
+async-graphql = { version = "4.0.5", features = ["uuid"] }
+sea-orm = { version = "0.9.0", features = ["sqlx-postgres", "runtime-tokio-rustls", "macros"] }
