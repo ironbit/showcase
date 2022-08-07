@@ -1,0 +1,12 @@
+[package]
+name = "db-entity"
+version = "0.1.0"
+edition = "2021"
+publish = false
+
+[lib]
+name = "db_entity"
+path = "src/lib.rs"
+
+[dependencies]
+sea-orm = { version = "0.9.0", features = ["sqlx-postgres", "runtime-tokio-rustls", "macros"] }
