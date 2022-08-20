@@ -5,38 +5,88 @@ use {
         model::{self, Author as ModelAuthor},
     },
     anyhow::{Error, Result},
-    async_graphql::{Context, Object, SimpleObject},
+    async_graphql::{Context, InputObject, Object, SimpleObject},
     std::sync::Arc,
     uuid::Uuid,
 };
 
-#[derive(SimpleObject)]
+#[derive(InputObject, SimpleObject)]
 pub struct Author {
     pub id: Uuid,
     pub first_name: String,
     pub last_name: String,
 }
 
-impl TryFrom<ModelAuthor> for Author {
-    type Error = Error;
+impl Author {
+    pub fn new(id: Uuid, first_name: String, last_name: String) -> Self {
+        Self {
+            id,
+            first_name,
+            last_name,
+        }
+    }
+}
 
-    fn try_from(value: ModelAuthor) -> Result<Author> {
-        Ok(Self {
-            id: value.id,
-            first_name: value.first_name,
-            last_name: value.last_name,
-        })
+impl From<&ModelAuthor> for Author {
+    fn from(value: &ModelAuthor) -> Author {
+        let id = if let Some(id) = value.id {
+            id
+        } else {
+            Uuid::nil()
+        };
+        let first_name = if let Some(first_name) = &value.first_name {
+            first_name.clone()
+        } else {
+            String::new()
+        };
+        let last_name = if let Some(last_name) = &value.last_name {
+            last_name.clone()
+        } else {
+            String::new()
+        };
+
+        Self::new(id, first_name, last_name)
+    }
+}
+
+#[allow(clippy::from_over_into)]
+impl Into<ModelAuthor> for Author {
+    fn into(self) -> ModelAuthor {
+        let id = if self.id.is_nil() {
+            None
+        } else {
+            Some(self.id)
+        };
+        let first_name = if self.first_name.is_empty() {
+            None
+        } else {
+            Some(self.first_name)
+        };
+        let last_name = if self.last_name.is_empty() {
+            None
+        } else {
+            Some(self.last_name)
+        };
+
+        ModelAuthor::new(id, first_name, last_name)
     }
 }
 
 #[Object]
 impl Query {
-    async fn author(&self, ctx: &Context<'_>, id: Uuid) -> Result<Author> {
+    async fn author(&self, ctx: &Context<'_>, author: Author) -> Result<Option<Vec<Author>>> {
+        // retrieve context
         let ctx = &ctx
             .data::<Arc<HandlerContext>>()
             .map_err(|_| Error::msg(""))?;
-        let model_author = model::fetch_author(&ctx.as_ref().database, id).await?;
-        let author = Author::try_from(model_author)?;
-        Ok(author)
+
+        // apply fetch
+        let authors = model::fetch_author(&ctx.as_ref().database, author.into()).await?;
+
+        // generate output
+        match authors {
+            None => Ok(None),
+            Some(authors) => Ok(Some(authors.iter().map(Author::from).collect())),
+        }
     }
 }
