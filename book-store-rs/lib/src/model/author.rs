@@ -7,7 +7,7 @@ use {
     uuid::Uuid,
 };
 
-#[derive(Debug, Clone, PartialEq)]
+#[derive(Debug, Clone, Eq, PartialEq)]
 pub struct Author {
     pub id: Option<Uuid>,
     pub first_name: Option<String>,
