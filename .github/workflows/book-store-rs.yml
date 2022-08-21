@@ -2,9 +2,15 @@ name: CI Book Store Rust
 
 on:
     pull_request:
+        paths:
+            - 'book-store-rs/**'
+            - '!book-store-rs/**/*.md'
     push:
         branches:
             - main
+        paths:
+            - 'book-store-rs/**'
+            - '!book-store-rs/**/*.md'
 
 permissions:
     contents: read
