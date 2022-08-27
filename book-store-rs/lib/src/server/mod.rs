@@ -1,6 +1,7 @@
 // SPDX-License-Identifier: Apache-2.0
 use {
     crate::{
+        config,
         handler::{self, Schema as HandlerSchema},
         model::Database,
     },
@@ -21,7 +22,8 @@ pub struct Server;
 impl Server {
     #[allow(clippy::pedantic)]
     pub async fn run(&self) -> Result<()> {
-        let database = Database::new().await?;
+        let config = config::Config::new()?;
+        let database = Database::new(config).await?;
         let schema = handler::create_schema(database);
 
         let app = Router::new()

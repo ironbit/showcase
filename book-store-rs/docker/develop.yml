@@ -1,0 +1,46 @@
+version: "3.8"
+
+services:
+  database:
+    container_name: book-store-db
+    image: postgres
+    environment:
+      POSTGRES_USER: $DB_USER
+      POSTGRES_PASSWORD: $DB_PASS
+      POSTGRES_DB: $DB_NAME
+    networks:
+      - book-store-net
+    volumes:
+      - type: volume
+        source: book-store-data
+        target: /var/lib/postgresql/data
+
+  migration:
+    container_name: book-store-mig
+    build:
+      context: .
+      dockerfile: ./docker/migration.dockerfile
+    command: bash -c "
+      rsync -r --delete --exclude=target/ /root/book-store-mount/* /root/book-store-rs &&
+      sea-orm-cli migrate fresh -d /root/book-store-rs/db/migration"
+    environment:
+      DATABASE_URL: $DB_KIND://$DB_USER:$DB_PASS@$DB_HOST:$DB_PORT/$DB_NAME
+    networks:
+      - book-store-net
+    volumes:
+      - type: bind
+        source: .
+        target: /root/book-store-mount
+        read_only: true
+      - type: volume
+        source: book-store-source
+        target: /root/book-store-rs
+    depends_on:
+      - database
+
+networks:
+  book-store-net:
+
+volumes:
+  book-store-data:
+  book-store-source:
