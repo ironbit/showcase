@@ -446,6 +446,7 @@ dependencies = [
  "axum",
  "db-entity",
  "hyper",
+ "lazy_static",
  "sea-orm",
  "tokio",
  "uuid",

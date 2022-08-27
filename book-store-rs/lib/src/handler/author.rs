@@ -10,10 +10,14 @@ use {
     uuid::Uuid,
 };
 
-#[derive(InputObject, SimpleObject)]
+#[derive(Debug, Clone, Eq, PartialEq, InputObject, SimpleObject)]
+#[graphql(input_name = "AuthorInput")]
 pub struct Author {
+    #[graphql(default_with = "Uuid::nil()")]
     pub id: Uuid,
+    #[graphql(default = "")]
     pub first_name: String,
+    #[graphql(default = "")]
     pub last_name: String,
 }
 
@@ -74,14 +78,14 @@ impl Into<ModelAuthor> for Author {
 
 #[Object]
 impl Query {
-    async fn author(&self, ctx: &Context<'_>, author: Author) -> Result<Option<Vec<Author>>> {
+    async fn author(&self, ctx: &Context<'_>, params: Author) -> Result<Option<Vec<Author>>> {
         // retrieve context
         let ctx = &ctx
             .data::<Arc<HandlerContext>>()
             .map_err(|_| Error::msg(""))?;
 
         // apply fetch
-        let authors = model::fetch_author(&ctx.as_ref().database, author.into()).await?;
+        let authors = model::fetch_author(&ctx.as_ref().database, params.into()).await?;
 
         // generate output
         match authors {
