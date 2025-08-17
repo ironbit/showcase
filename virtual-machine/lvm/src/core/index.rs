@@ -10,13 +10,25 @@ pub struct Index(usize);
 impl Index {
     pub fn new<T>(val: T) -> Self
     where
-        T: Into<usize>,
+        T: Into<Index>,
     {
-        Self(val.into())
+        val.into()
     }
 
     pub fn inner(&self) -> usize {
         self.0
+    }
+}
+
+impl From<i32> for Index {
+    fn from(n: i32) -> Self {
+        Self(n as usize)
+    }
+}
+
+impl From<usize> for Index {
+    fn from(n: usize) -> Self {
+        Self(n)
     }
 }
 
