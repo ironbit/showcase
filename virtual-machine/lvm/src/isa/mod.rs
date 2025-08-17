@@ -1,2 +1,4 @@
+pub mod task;
+
 mod ext;
-pub use ext::{BinaryExt, CommandExt, NullaryExt, Status, UnaryExt};
+pub use ext::{AryExt, BinaryExt, CommandExt, NullaryExt, Status, UnaryExt};

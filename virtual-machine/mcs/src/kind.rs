@@ -13,6 +13,11 @@ pub fn parse(input: TokenStream, kind: &str) -> TokenStream {
     let execute: syn::Expr = syn::parse_str(&expr).unwrap();
 
     let definition = quote! {
+        impl<S> crate::isa::AryExt<S> for #ident
+        where
+            S: crate::mem::StackExt + std::fmt::Debug,
+        { }
+
         impl<S> crate::isa::CommandExt<S> for #ident
         where
             S: crate::mem::StackExt + std::fmt::Debug,
