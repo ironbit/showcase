@@ -11,7 +11,7 @@ where
 {
     fn perform(&self) -> Result<Status>;
 
-    fn process(&self, _code: &core::Code, _ctx: &mut vm::Context<S>) -> Result<Status> {
+    fn process(&self, _ctx: &mut vm::Context<S>, _code: &core::Code) -> Result<Status> {
         self.perform()
     }
 }

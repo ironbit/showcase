@@ -12,7 +12,7 @@ where
     #[rustfmt::skip]
     fn perform(&self, lhs: core::Param, rhs: core::Param) -> Result<(Status, Option<core::Param>, Option<core::Param>)>;
 
-    fn process(&self, code: &core::Code, ctx: &mut vm::Context<S>) -> Result<Status> {
+    fn process(&self, ctx: &mut vm::Context<S>, code: &core::Code) -> Result<Status> {
         let stack = ctx.stack();
 
         let lhs = self.load_lhs_param(stack, code)?;
