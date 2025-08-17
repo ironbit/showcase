@@ -17,6 +17,7 @@ name = "lvm"
 version = "1.0.0"
 dependencies = [
  "anyhow",
+ "mcs",
  "serde",
 ]
 
