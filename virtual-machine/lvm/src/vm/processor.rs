@@ -39,6 +39,15 @@ where
     }
 }
 
+impl<S> fmt::Display for Processor<S>
+where
+    S: mem::StackExt + std::fmt::Debug,
+{
+    fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
+        write!(f, "{:#?}", &self.context.stack)
+    }
+}
+
 impl<S> fmt::Debug for Processor<S>
 where
     S: mem::StackExt + std::fmt::Debug,

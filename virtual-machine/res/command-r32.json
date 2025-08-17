@@ -1,0 +1,40 @@
+[{
+  "opcode": 100,
+  "kind": "nullary",
+  "task": "halt"
+}, {
+  "opcode": 112,
+  "rank": "r32",
+  "kind": "binary",
+  "task": "jump"
+}, {
+  "opcode": 202,
+  "rank": "r32",
+  "kind": "unary",
+  "task": "push"
+}, {
+  "opcode": 212,
+  "rank": "r32",
+  "kind": "unary",
+  "task": "pop"
+}, {
+  "opcode": 222,
+  "rank": "r32",
+  "kind": "unary",
+  "task": "dupe"
+}, {
+  "opcode": 232,
+  "rank": "r32",
+  "kind": "binary",
+  "task": "swap"
+}, {
+  "opcode": 302,
+  "rank": "r32",
+  "kind": "binary",
+  "task": "add"
+}, {
+  "opcode": 312,
+  "rank": "r32",
+  "kind": "binary",
+  "task": "equal"
+}]

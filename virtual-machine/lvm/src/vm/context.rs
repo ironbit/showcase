@@ -8,7 +8,7 @@ pub struct Context<S>
 where
     S: mem::StackExt + fmt::Debug,
 {
-    stack: S,
+    pub(crate) stack: S,
     counter: core::Index,
 }
 

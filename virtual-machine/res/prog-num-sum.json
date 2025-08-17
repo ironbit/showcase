@@ -1,0 +1,65 @@
+[{
+  "label": "push stack - variable 'result'",
+  "opcode": 202,
+  "value": 0
+}, {
+  "label": "push stack - variable 'limit'",
+  "opcode": 202,
+  "value": 10
+}, {
+  "label": "push stack - variable 'counter'",
+  "opcode": 202,
+  "value": 0
+}, {
+  "label": "push stack - constant 'step' - index 3 in program",
+  "opcode": 202,
+  "value": 1
+}, {
+  "label": "update 'counter' - sum 'counter' and 'step'",
+  "opcode": 302
+}, {
+  "label": "dupe 'counter' - push onto stack",
+  "opcode": 222
+}, {
+  "label": "dupe 'result' - push onto stack",
+  "opcode": 222,
+  "load": 3,
+  "save": 3
+}, {
+  "label": "update 'result' - sum 'result' and 'counter'",
+  "opcode": 302
+}, {
+  "label": "swap 'result' - swap index 0 and 'result'",
+  "opcode": 232,
+  "load": 3,
+  "save": 2
+}, {
+  "label": "pop stack - remove 'result' old value",
+  "opcode": 212
+}, {
+  "label": "dupe 'limit' - push onto stack",
+  "opcode": 222,
+  "load": 1,
+  "save": 1
+}, {
+  "label": "dupe 'counter' - push onto stack",
+  "opcode": 222,
+  "load": 1,
+  "save": 1
+}, {
+  "label": "compare 'limit' and 'counter'",
+  "opcode": 312
+}, {
+  "label": "jump if not equal to index 3 in program",
+  "opcode": 112,
+  "value": 3
+}, {
+  "label": "pop stack - remove 'counter'",
+  "opcode": 212
+}, {
+  "label": "pop stack - remove 'limit'",
+  "opcode": 212
+}, {
+  "label": "halt processor - 'result' only value in stack",
+  "opcode": 100
+}]
